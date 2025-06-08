@@ -36,10 +36,10 @@ Aparte la plataforma permite realizar operaciones CRUD (Crear, Leer, Actualizar 
 * Instala las dependencias: ``npm install``
 * Asegurate de crear un archivo ``.env`` en la carpeta principal que contenga las siguientes variables de entorno:
 
-``
-MONGODB_URI=mongodb+srv://admin:admin@proyecto6.vdjfgil.mongodb.net/?retryWrites=true&w=majority&appName=proyecto6
-PORT=3000
-SECRET=UCAMP
-``
+````
+* MONGODB_URI=mongodb+srv://admin:admin@proyecto6.vdjfgil.mongodb.net/?retryWrites=true&w=majority&appName=proyecto6
+* PORT=3000
+* SECRET=UCAMP
+````
 
   
