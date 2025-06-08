@@ -41,5 +41,39 @@ Aparte la plataforma permite realizar operaciones CRUD (Crear, Leer, Actualizar 
 * PORT=3000
 * SECRET=UCAMP
 ````
+* Corre el proyecto: ``npm run dev``
+
+## Implementacion de la solucion
+
+Creamos los modelos que utilizaremos, User, Purse, Sunglass
+
+* Modelo Usuario:
+````
+const mongoose = require("mongoose");
+const userSchema = mongoose.Schema(
+  {
+    username: {
+      type: String,
+      required: true,
+    },
+    email: {
+      type: String,
+      required: true,
+    },
+    password: {
+      type: String,
+      required: true,
+    },
+  },
+  {
+    timestamps: true,
+  }
+);
+
+const User = mongoose.model("User", userSchema);
+
+module.exports = User;
+
+````
 
   
