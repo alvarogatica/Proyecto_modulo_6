@@ -36,7 +36,9 @@ exports.updateSunglassById = async (req, res) => {
       { new: true, runValidators: true }
     );
     if (!updatedSunglass) {
-      return res.status(404).json({ message: "anteojos de sol no encontrados" });
+      return res
+        .status(404)
+        .json({ message: "anteojos de sol no encontrados" });
     }
     return res.status(200).json({ updatedSunglass });
   } catch (error) {
@@ -51,7 +53,9 @@ exports.deleteSunglassById = async (req, res) => {
   try {
     const deletedSunglass = await Sunglass.findByIdAndDelete(req.params.id);
     if (!deletedSunglass) {
-      return res.status(404).json({ message: "Anteojos de sol no encontrados" });
+      return res
+        .status(404)
+        .json({ message: "Anteojos de sol no encontrados" });
     }
     return res.status(200).json({ deletedSunglass });
   } catch (error) {
