@@ -47,7 +47,7 @@ Aparte la plataforma permite realizar operaciones CRUD (Crear, Leer, Actualizar 
 
 Creamos los modelos que utilizaremos, User, Purse, Sunglass
 
-* Modelo Usuario:
+## 1. Modelo Usuario:
 ````js
 const mongoose = require("mongoose");
 const userSchema = mongoose.Schema(
