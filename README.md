@@ -28,3 +28,13 @@ Aparte la plataforma permite realizar operaciones CRUD (Crear, Leer, Actualizar 
 
 ![image](https://github.com/user-attachments/assets/e86f8607-ce4b-40e6-bb70-9ae1b45f5c68)
 
+## Instalacion
+
+* Abre una terminal en windows y sigue los pasos.
+* Clona este repositorio: ``git clone https://github.com/alvarogatica/Proyecto_modulo_6.git``
+* Situate en la carpeta principal: ``cd Proyecto_modulo_6``
+* Instala las dependencias: ``npm install``
+* Asegurate de tener un archivo .env en la carpeta principal que contenga las variables de entorno:
+  ![image](https://github.com/user-attachments/assets/2cffeee4-1a93-4f7b-b866-9ea58005d8a2)
+
+  
