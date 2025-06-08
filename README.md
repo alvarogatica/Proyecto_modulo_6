@@ -424,8 +424,52 @@ sunglassRouter.delete("/:id", deleteSunglassById); // Localhost:3000/api/sunglas
 module.exports = sunglassRouter;
 ````
 
+## CONEXION A BD: 
+````js
+const mongoose = require("mongoose");
+
+const connectDB = async () => {
+  try {
+    await mongoose.connect(process.env.MONGODB_URI);
+    console.log("conectado a la base de datos");
+  } catch (error) {
+    console.error("error al conectar con MongoDB: ", error.message);
+    process.exit(1);
+  }
+};
+
+module.exports = connectDB;
+````
+## Uso de middleware de authorization:
+````js
+const jwt = require("jsonwebtoken");
+
+module.exports = (req, res, next) => {
+  let { authorization } = req.headers;
+  if (!authorization) {
+    return res.status(401).json({ msg: "No autorizado" });
+  }
+  try {
+    let [type, token] = authorization.split(" ");
+    if (type === "Token" || type === "Bearer") {
+      const openToken = jwt.verify(token, process.env.SECRET);
+      req.user = openToken.user;
+      next();
+    } else {
+      return res.status(401).json({ msg: "No autorizado" });
+    }
+  } catch (error) {
+    res.json({
+      msg: "Token no valido",
+      error: error.message,
+    });
+  }
+};
+````
+
 ## ENDPOINTS
 ### Usuario
+(Para los Endpoint usuario que tiene que verificar el ID, es necesario revisar el token bearer que nos entrega la hashed password, para que de esta forma reconozca el token que se le pasa para verificar que el usuario es correcto)
 
 | Descripcion   | Metodo | Endpoint |
 | ------------- | ------------- | ----------- |
@@ -433,13 +477,22 @@ module.exports = sunglassRouter;
 | Login  | POST  | /api/users/login |
 | Verificar Usuario | GET | /api/users/verify-user |
 | Actualizar Usuario | PUT | /api/users/:id |
-| Eliminar Usuario | DELETE | /api/users/:id
-
+| Eliminar Usuario | DELETE | /api/users/:id |
 
 ### Purse
 
-
+| Descripcion   | Metodo | Endpoint |
+| ------------- | ------------- | ----------- |
+| Crear Cartera  | POST  | /api/purses/create |
+| Obtener listado de carteras  | GET  | /api/purses/ |
+| Actualizar Cartera | PUT | /api/purses/:id |
+| Eliminar cartera | DELETE | /api/purses/:id |
 
 ### Sunglass
 
-
+| Descripcion   | Metodo | Endpoint |
+| ------------- | ------------- | ----------- |
+| Crear Anteojos  | POST  | /api/sunglasses/create |
+| Obtener listado de anteojos | GET | /api/sunglasses/ |
+| Actualizar anteojos | PUT | /api/sunglasses/:id |
+| Eliminar anteojos | DELETE | /api/sunglasses/:id |
