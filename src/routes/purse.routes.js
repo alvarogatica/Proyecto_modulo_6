@@ -6,3 +6,5 @@ guitarRouter.get('/', getAllPurses); // Localhost:3000/api/purses/
 guitarRouter.post('/create', createPurse); // Localhost:3000/api/purses/create
 guitarRouter.put('/:id', updatePurseById); // Localhost:3000/api/purses/:id
 guitarRouter.delete('/:id', deletePurseById); // Localhost:3000/api/purses/:id
+
+module.exports = guitarRouter;
