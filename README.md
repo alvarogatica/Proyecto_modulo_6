@@ -206,7 +206,7 @@ userRouter.delete("/:id", auth, deleteUserById); //Localhost:3000/api/users/:id
 
 module.exports = userRouter;
 ````
-2. Modelo Purse
+## 2. Modelo Purse
 ````js
 const mongoose = require("mongoose");
 const purseSchema = mongoose.Schema(
@@ -312,7 +312,7 @@ guitarRouter.delete("/:id", deletePurseById); // Localhost:3000/api/purses/:id
 
 module.exports = guitarRouter;
 ````
-3. Modelo de Sunglass:
+## 3. Modelo de Sunglass:
 ````js
 const mongoose = require("mongoose");
 const sunglassSchema = mongoose.Schema(
@@ -423,4 +423,23 @@ sunglassRouter.delete("/:id", deleteSunglassById); // Localhost:3000/api/sunglas
 
 module.exports = sunglassRouter;
 ````
-  
+
+## ENDPOINTS
+### Usuario
+
+| Descripcion   | Metodo | Endpoint |
+| ------------- | ------------- | ----------- |
+| Crear Usuario  | POST  | /api/users/create |
+| Login  | POST  | /api/users/login |
+| Verificar Usuario | GET | /api/users/verify-user |
+| Actualizar Usuario | PUT | /api/users/:id |
+| Eliminar Usuario | DELETE | /api/users/:id
+
+
+### Purse
+
+
+
+### Sunglass
+
+
