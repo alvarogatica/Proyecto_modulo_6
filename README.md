@@ -43,6 +43,36 @@ Aparte la plataforma permite realizar operaciones CRUD (Crear, Leer, Actualizar 
 ````
 * Corre el proyecto: ``npm run dev``
 
+## ENDPOINTS
+### Usuario
+(Para los Endpoint usuario que tiene que verificar el ID, es necesario revisar el token bearer que nos entrega la hashed password, para que de esta forma reconozca el token que se le pasa para verificar que el usuario es correcto)
+
+| Descripcion   | Metodo | Endpoint |
+| ------------- | ------------- | ----------- |
+| Crear Usuario  | POST  | /api/users/create |
+| Login  | POST  | /api/users/login |
+| Verificar Usuario | GET | /api/users/verify-user |
+| Actualizar Usuario | PUT | /api/users/:id |
+| Eliminar Usuario | DELETE | /api/users/:id |
+
+### Purse
+
+| Descripcion   | Metodo | Endpoint |
+| ------------- | ------------- | ----------- |
+| Crear Cartera  | POST  | /api/purses/create |
+| Obtener listado de carteras  | GET  | /api/purses/ |
+| Actualizar Cartera | PUT | /api/purses/:id |
+| Eliminar cartera | DELETE | /api/purses/:id |
+
+### Sunglass
+
+| Descripcion   | Metodo | Endpoint |
+| ------------- | ------------- | ----------- |
+| Crear Anteojos  | POST  | /api/sunglasses/create |
+| Obtener listado de anteojos | GET | /api/sunglasses/ |
+| Actualizar anteojos | PUT | /api/sunglasses/:id |
+| Eliminar anteojos | DELETE | /api/sunglasses/:id |
+
 ## Implementacion de la solucion
 
 Creamos los modelos que utilizaremos, User, Purse, Sunglass
@@ -466,33 +496,29 @@ module.exports = (req, res, next) => {
   }
 };
 ````
+## Archivo principal de la app:
+````js
+require("dotenv").config();
+const express = require("express");
+const connectDB = require("./config/db");
+const cors = require("cors");
+const userRouter = require("./routes/user.routes");
+const purseRouter = require("./routes/purse.routes");
+const sunglassRouter = require("./routes/sunglass.routes"); // Importar las rutas de anteojos de sol
 
-## ENDPOINTS
-### Usuario
-(Para los Endpoint usuario que tiene que verificar el ID, es necesario revisar el token bearer que nos entrega la hashed password, para que de esta forma reconozca el token que se le pasa para verificar que el usuario es correcto)
+const PORT = process.env.PORT || 5000;
+const app = express();
+// Conectar a la base de datos
+connectDB();
 
-| Descripcion   | Metodo | Endpoint |
-| ------------- | ------------- | ----------- |
-| Crear Usuario  | POST  | /api/users/create |
-| Login  | POST  | /api/users/login |
-| Verificar Usuario | GET | /api/users/verify-user |
-| Actualizar Usuario | PUT | /api/users/:id |
-| Eliminar Usuario | DELETE | /api/users/:id |
+app.use(express.json());
+app.use(cors());
 
-### Purse
+app.use("/api/users", userRouter); // Rutas de usuarios
+app.use("/api/purses", purseRouter); // Rutas de carteras
+app.use("/api/sunglasses", sunglassRouter); // Rutas de anteojos de sol
 
-| Descripcion   | Metodo | Endpoint |
-| ------------- | ------------- | ----------- |
-| Crear Cartera  | POST  | /api/purses/create |
-| Obtener listado de carteras  | GET  | /api/purses/ |
-| Actualizar Cartera | PUT | /api/purses/:id |
-| Eliminar cartera | DELETE | /api/purses/:id |
-
-### Sunglass
-
-| Descripcion   | Metodo | Endpoint |
-| ------------- | ------------- | ----------- |
-| Crear Anteojos  | POST  | /api/sunglasses/create |
-| Obtener listado de anteojos | GET | /api/sunglasses/ |
-| Actualizar anteojos | PUT | /api/sunglasses/:id |
-| Eliminar anteojos | DELETE | /api/sunglasses/:id |
+app.listen(PORT, () => {
+  console.log(`Servidor corriendo en el puerto ${PORT}`);
+});
+````
