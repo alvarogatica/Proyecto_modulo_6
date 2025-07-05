@@ -15,9 +15,9 @@ exports.getAllPurses = async (req, res) => {
 };
 
 exports.createPurse = async (req, res) => {
-  const { name, price } = req.body;
+  const { name, price, description, img } = req.body;
   try {
-    const newPurse = await Purse.create({ name, price });
+    const newPurse = await Purse.create({ name, price, description, img });
     return res.status(200).json({ newPurse });
   } catch (error) {
     return res.status(500).json({
@@ -28,11 +28,11 @@ exports.createPurse = async (req, res) => {
 };
 
 exports.updatePurseById = async (req, res) => {
-  const { name, price } = req.body;
+  const { name, price, description, img } = req.body;
   try {
     const updatedPurse = await Purse.findByIdAndUpdate(
       req.params.id,
-      { name, price },
+      { name, price, description, img },
       { new: true, runValidators: true }
     );
     if (!updatedPurse) {
