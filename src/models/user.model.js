@@ -8,10 +8,23 @@ const userSchema = mongoose.Schema(
     email: {
       type: String,
       required: true,
+      unique: true,
     },
     password: {
       type: String,
       required: true,
+    },
+    country: {
+      type: String,
+      default: ""
+    },
+    adress: {
+      type: String,
+      default: ""
+    },
+    zipcode: {
+      type: String,
+      default: 0
     },
   },
   {

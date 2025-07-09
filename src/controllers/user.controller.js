@@ -47,13 +47,14 @@ exports.loginUser = async (req, res) => {
       (error, token) => {
         if (error) throw error;
         const isProd = process.env.NODE_ENV === "production";
-        res.cookie("token", token, {
-          httpOnly: true,
-          secure: isProd,
-          sameSite: isProd ? "None" : "Lax",
-          maxAge: 24 * 60 * 60 * 1000
-        })
-        .json({msg: "Login exitoso"})
+        res
+          .cookie("token", token, {
+            httpOnly: true,
+            secure: isProd,
+            sameSite: isProd ? "None" : "Lax",
+            maxAge: 24 * 60 * 60 * 1000,
+          })
+          .json({ msg: "Login exitoso" });
       }
     );
   } catch (error) {
@@ -81,28 +82,29 @@ exports.logout = (req, res) => {
     httpOnly: true,
     secure: process.env.NODE_ENV === "production",
     sameSite: process.env.NODE_ENV === "production" ? "None" : "Lax",
-  })
-  return res.json({msg: "Logout exitoso"});
-}
+  });
+  return res.json({ msg: "Logout exitoso" });
+};
 
-exports.updateUserById = async (req, res) => {
-  const { username, email, password } = req.body;
+exports.updateUser = async (req, res) => {
+  const newDataForOurUser = req.body;
+
   try {
-    const salt = await bcryptjs.genSalt(10);
-    const hashedPassword = await bcryptjs.hash(password, salt);
     const updatedUser = await User.findByIdAndUpdate(
-      req.params.id,
-      { username, email, password: hashedPassword },
-      { new: true, runValidators: true }
-    );
-    if (!updatedUser) {
-      return res.status(404).json({ message: "Usuario no encontrado" });
-    }
-    return res.status(200).json({ updatedUser });
+      req.user.id,
+      newDataForOurUser,
+      { new: true }
+    ).select("-password");
+
+    res.json({
+      msg: "Usuario actualizado con éxito.",
+      data: updatedUser,
+    });
   } catch (error) {
-    return res.status(500).json({
-      msg: "Hubo un error actualizando el usuario",
-      error: error.message,
+    console.log(error);
+
+    res.status(500).json({
+      msg: "Hubo un error actualizando el usuario.",
     });
   }
 };
