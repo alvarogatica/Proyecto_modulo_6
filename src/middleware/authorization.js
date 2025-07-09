@@ -1,21 +1,16 @@
 const jwt = require("jsonwebtoken");
 
 module.exports = (req, res, next) => {
-  let { authorization } = req.headers;
-  if (!authorization) {
+  let token = req.cookies.token;
+  if (!token) {
     return res.status(401).json({ msg: "No autorizado" });
   }
   try {
-    let [type, token] = authorization.split(" ");
-    if (type === "Token" || type === "Bearer") {
-      const openToken = jwt.verify(token, process.env.SECRET);
-      req.user = openToken.user;
-      next();
-    } else {
-      return res.status(401).json({ msg: "No autorizado" });
-    }
+    const openToken = jwt.verify(token, process.env.SECRET);
+    req.user = openToken.user;
+    next();
   } catch (error) {
-    res.json({
+    return res.status(401).json({
       msg: "Token no valido",
       error: error.message,
     });
