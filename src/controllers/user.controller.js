@@ -42,7 +42,7 @@ exports.loginUser = async (req, res) => {
       payload,
       process.env.SECRET,
       {
-        expiresIn: "1h",
+        expiresIn: "1d",
       },
       (error, token) => {
         if (error) throw error;
@@ -75,6 +75,15 @@ exports.verifyUser = async (req, res) => {
     });
   }
 };
+
+exports.logout = (req, res) => {
+  res.clearCookie("token", {
+    httpOnly: true,
+    secure: process.env.NODE_ENV === "production",
+    sameSite: process.env.NODE_ENV === "production" ? "None" : "Lax",
+  })
+  return res.json({msg: "Logout exitoso"});
+}
 
 exports.updateUserById = async (req, res) => {
   const { username, email, password } = req.body;
