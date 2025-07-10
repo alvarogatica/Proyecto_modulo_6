@@ -26,6 +26,15 @@ const userSchema = mongoose.Schema(
       type: String,
       default: 0
     },
+    phone: {
+      type: String,
+      default: ""
+    },
+    cart: {
+      type: mongoose.Types.ObjectId,
+      ref: "Cart",
+      default: []
+    }
   },
   {
     timestamps: true,

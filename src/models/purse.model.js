@@ -1,6 +1,23 @@
 const mongoose = require("mongoose");
 const purseSchema = mongoose.Schema(
   {
+    idProd: {
+      type: String,
+      required: true,
+    },
+    priceID: {
+      type: String,
+      required: true,
+    },
+    currency: {
+      type: String,
+      required: true,
+    },
+    slug: {
+      type: String,
+      required: true,
+      unique: true,
+    },
     name: {
       type: String,
       required: true,

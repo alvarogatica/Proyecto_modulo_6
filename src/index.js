@@ -5,7 +5,8 @@ const cors = require("cors");
 const cookieParser = require("cookie-parser");
 const userRouter = require("./routes/user.routes");
 const purseRouter = require("./routes/purse.routes");
-const sunglassRouter = require("./routes/sunglass.routes"); // Importar las rutas de anteojos de sol
+const sunglassRouter = require("./routes/sunglass.routes");
+const cartRouter = require("./routes/cart.routes") // Importar las rutas de anteojos de sol
 
 const PORT = process.env.PORT || 5000;
 const app = express();
@@ -26,7 +27,8 @@ app.use(cookieParser());
 
 app.use("/api/users", userRouter); // Rutas de usuarios
 app.use("/api/purses", purseRouter); // Rutas de carteras
-app.use("/api/sunglasses", sunglassRouter); // Rutas de anteojos de sol
+app.use("/api/sunglasses", sunglassRouter); // localhost:3000/api/sunglasses
+app.use("/api/carts", cartRouter); // localhost:3000/api/carts
 
 app.listen(PORT, () => {
   console.log(`Servidor corriendo en el puerto ${PORT}`);

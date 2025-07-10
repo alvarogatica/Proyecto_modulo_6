@@ -1,4 +1,5 @@
 const Purse = require("../models/purse.model");
+const stripe = require("stripe")(process.env.STRIPE_KEY);
 
 exports.getAllPurses = async (req, res) => {
   try {
@@ -15,9 +16,29 @@ exports.getAllPurses = async (req, res) => {
 };
 
 exports.createPurse = async (req, res) => {
-  const { name, price, description, img } = req.body;
+  const { name, price, description, img, currency, slug } = req.body;
   try {
-    const newPurse = await Purse.create({ name, price, description, img });
+    const product = await stripe.products.create({
+      name,
+      description,
+      images: [img],
+      metadata: { productDescription: description, slug },
+    });
+    const stripePrice = await stripe.prices.create({
+      unit_amount: price,
+      currency,
+      product: product.id,
+    });
+    const newPurse = await Purse.create({
+      idProd: product.id,
+      priceID: stripePrice.id,
+      name,
+      price,
+      description,
+      img,
+      slug,
+      currency,
+    });
     return res.status(200).json({ newPurse });
   } catch (error) {
     return res.status(500).json({
