@@ -1,4 +1,5 @@
 const User = require("../models/user.model");
+const Cart = require("../models/cart.model");
 const bcryptjs = require("bcryptjs");
 const jwt = require("jsonwebtoken");
 
@@ -7,10 +8,12 @@ exports.createUser = async (req, res) => {
   try {
     const salt = await bcryptjs.genSalt(10);
     const hashedPassword = await bcryptjs.hash(password, salt);
+    const newCart = await Cart.create({});
     const newUser = await User.create({
       username,
       email,
       password: hashedPassword,
+      cart: newCart
     });
     return res.status(200).json({ newUser });
   } catch (error) {
