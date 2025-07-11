@@ -19,7 +19,7 @@ exports.createCheckoutSession = async (req, res) => {
 
   const session = await stripe.checkout.sessions.create({
     line_items,
-    mode: "payments",
+    mode: "payment",
     success_url: `${process.env.STRIPE_SUCCESS_URL}`,
     cancel_url: `${process.env.STRIPE_CANCEL_URL}`,
     customer_email: foundUser.email,
