@@ -1,4 +1,5 @@
 const Sunglass = require("../models/sunglass.model");
+const stripe = require("stripe")(process.env.STRIPE_KEY);
 
 exports.getAllSunglasses = async (req, res) => {
   try {
@@ -15,9 +16,29 @@ exports.getAllSunglasses = async (req, res) => {
 };
 
 exports.createSunglass = async (req, res) => {
-  const { name, price } = req.body;
+  const { name, price, description, img, currency, slug } = req.body;
   try {
-    const newSunglass = await Sunglass.create({ name, price });
+    const product = await stripe.products.create({
+      name,
+      description,
+      images: [img],
+      metadata: { productDescription: description, slug },
+    });
+    const stripePrice = await stripe.prices.create({
+      unit_amount: price,
+      currency,
+      product: product.id,
+    });
+    const newSunglass = await Sunglass.create({
+      idProd: product.id,
+      priceID: stripePrice.id,
+      name,
+      price,
+      description,
+      img,
+      slug,
+      currency,
+    });
     return res.status(200).json({ newSunglass });
   } catch (error) {
     return res.status(500).json({
@@ -28,11 +49,11 @@ exports.createSunglass = async (req, res) => {
 };
 
 exports.updateSunglassById = async (req, res) => {
-  const { name, price } = req.body;
+  const { name, price, description, img } = req.body;
   try {
     const updatedSunglass = await Sunglass.findByIdAndUpdate(
       req.params.id,
-      { name, price },
+      { name, price, description, img },
       { new: true, runValidators: true }
     );
     if (!updatedSunglass) {
