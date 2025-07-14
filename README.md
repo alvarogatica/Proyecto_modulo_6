@@ -22,6 +22,11 @@ Este es el **backend** de urdupes.cl, una tienda online de accesorios femeninos 
 - Páginas de éxito y cancelación de pago.
 - Configuración CORS para frontend desplegado.
 
+## Estructura de carpetas: 
+
+<img width="252" height="620" alt="image" src="https://github.com/user-attachments/assets/69b72c14-3c41-45eb-ba2d-e4cc7112f5ee" />
+
+
 ## Uso local
 
 Clona el repositorio, instala dependencias y configura tu archivo `.env`.
