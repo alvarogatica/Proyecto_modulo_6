@@ -24,7 +24,7 @@ Este es el **backend** de urdupes.cl, una tienda online de accesorios femeninos 
 
 ## Estructura de carpetas: 
 
-<img width="252" height="620" alt="image" src="https://github.com/user-attachments/assets/69b72c14-3c41-45eb-ba2d-e4cc7112f5ee" />
+<img width="252" height="500" alt="image" src="https://github.com/user-attachments/assets/69b72c14-3c41-45eb-ba2d-e4cc7112f5ee" />
 
 
 ## Uso local
